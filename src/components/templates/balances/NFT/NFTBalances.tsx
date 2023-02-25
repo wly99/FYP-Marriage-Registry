@@ -27,7 +27,7 @@ const NFTBalances = () => {
           ))}
         </Grid>
       ) : (
-        <Box>Looks Like you do not have any NFTs</Box>
+        <Box>Looks like you do not have any NFTs</Box>
       )}
     </>
   );

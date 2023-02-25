@@ -10,7 +10,7 @@ const links = {
 const Footer = () => {
   return (
     <Box textAlign={'center'} w="full" p={6}>
-      <Text>
+      {/* <Text>
         ⭐️ Please star this{' '}
         <Link href={links.github} isExternal alignItems={'center'}>
           boilerplate <ExternalLinkIcon />
@@ -28,7 +28,7 @@ const Footer = () => {
         <Link href={links.moralis} isExternal alignItems={'center'}>
           Moralis <ExternalLinkIcon />
         </Link>
-      </Text>
+      </Text> */}
     </Box>
   );
 };

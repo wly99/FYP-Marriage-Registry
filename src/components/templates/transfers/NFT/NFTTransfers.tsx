@@ -76,7 +76,7 @@ const NFTTransfers = () => {
           </TableContainer>
         </Box>
       ) : (
-        <Box>Looks Like you do not have any NFT transfers</Box>
+        <Box>Looks like you do not have any NFT transfers</Box>
       )}
     </>
   );

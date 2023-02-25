@@ -78,7 +78,7 @@ const ERC20Balances = () => {
           </TableContainer>
         </Box>
       ) : (
-        <Box>Looks Like you do not have any ERC20 tokens</Box>
+        <Box>Looks like you do not have any ERC20 tokens</Box>
       )}
     </>
   );

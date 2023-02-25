@@ -70,7 +70,7 @@ const ERC20Transfers = () => {
           </TableContainer>
         </Box>
       ) : (
-        <Box>Looks Like you do not have any ERC20 Transfers</Box>
+        <Box>Looks like you do not have any ERC20 transfers</Box>
       )}
     </>
   );

@@ -1,0 +1,590 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "LogDeposit",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "officiantName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "officiantLocation",
+        "type": "string"
+      }
+    ],
+    "name": "addFirstRootOfficiant",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "officiantName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "officiantLocation",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "issuingAuthority",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "rootAuthority",
+        "type": "address"
+      },
+      {
+        "internalType": "enum MarriageRegistry.PermissionLevel",
+        "name": "permissions",
+        "type": "uint8"
+      }
+    ],
+    "name": "addOfficiant",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "firstPartnerName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "secondPartnerName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "firstWitnessName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "secondtWitnessName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "secondPartnerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "firstWitnessAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "secondWitnessAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "marriageDate",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "marriageLocation",
+        "type": "string"
+      }
+    ],
+    "name": "firstPartnerSign",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "firstWitnessSignOff",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getFirstWitnessSigned",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNumRecords",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getOfficiantPermissions",
+    "outputs": [
+      {
+        "internalType": "enum MarriageRegistry.PermissionLevel",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getOfficiantSigned",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "getRecords",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "firstPartnerName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "secondPartnerName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "firstWitnessName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "secondWitnessName",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "firstPartnerAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "secondPartnerAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "firstWitnessAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "secondWitnessAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "officiantAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "weddingDate",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "weddingLocation",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "secondPartnerSigned",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "firstWitnessSigned",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "secondWitnessSigned",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "officiantSigned",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct MarriageRegistry.Record[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getSecondPartnerSigned",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getSecondWitnessSigned",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "issuingAuthority",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "rootAuthority",
+        "type": "address"
+      }
+    ],
+    "name": "hasSameRootAuthority",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      }
+    ],
+    "name": "isOfficiantActive",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "officiantSignOff",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "officiants",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "officiantName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "officiantLocation",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "issuingAuthority",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "rootAuthority",
+        "type": "address"
+      },
+      {
+        "internalType": "enum MarriageRegistry.PermissionLevel",
+        "name": "permissions",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "isActive",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "records",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "firstPartnerName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "secondPartnerName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "firstWitnessName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "secondWitnessName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "secondPartnerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "firstWitnessAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "secondWitnessAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "weddingDate",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "weddingLocation",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "secondPartnerSigned",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "firstWitnessSigned",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "secondWitnessSigned",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "officiantSigned",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      }
+    ],
+    "name": "removeOfficiant",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "secondPartnerSign",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "firstPartnerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "secondWitnessSignOff",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

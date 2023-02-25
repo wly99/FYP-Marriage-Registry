@@ -1,62 +1,340 @@
-import { CheckCircleIcon, SettingsIcon } from '@chakra-ui/icons';
-import { Heading, VStack, List, ListIcon, ListItem } from '@chakra-ui/react';
+import { CheckCircleIcon, EditIcon, EmailIcon, SettingsIcon, ViewIcon } from '@chakra-ui/icons';
+import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import { EvmChain } from 'moralis/common-evm-utils';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import abi from './abi.json';
+import { useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { readContract } from '@wagmi/core';
+import Moralis from 'moralis';
+import { ethers } from 'ethers';
+
+const chain = EvmChain.MUMBAI;
+const address = '0xe10Df2d5502B439a580649d17c134dbB7c2a4FD4'; //0x00482878d4EE1d3aFbab2Fd0504492c7F6BF1861
 
 const Home = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const chain = EvmChain.MUMBAI;
+  const [marriageInfo, setMarriageInfo] = useState({
+    firstPartnerName: '-',
+    secondPartnerName: '-',
+    firstWitnessName: '-',
+    secondWitnessName: '-',
+    secondPartnerAddress: '-',
+    firstWitnessAddress: '-',
+    secondWitnessAddress: '-',
+    weddingDate: '-',
+    weddingLocation: '-',
+  });
+  const { config: firstPartnerSignConfig } = usePrepareContractWrite({
+    address: address,
+    abi: abi,
+    functionName: 'firstPartnerSign',
+    args: [
+      marriageInfo.firstPartnerName,
+      marriageInfo.secondPartnerName,
+      marriageInfo.firstWitnessName,
+      marriageInfo.secondWitnessName,
+      marriageInfo.secondPartnerAddress,
+      marriageInfo.firstWitnessAddress,
+      marriageInfo.secondWitnessAddress,
+      marriageInfo.weddingDate,
+      marriageInfo.weddingLocation,
+    ],
+  });
+  const { data, isLoading, isSuccess, error, write: firstPartnerSign } = useContractWrite(firstPartnerSignConfig);
+  const onFirstPartnerSign = async (data: any) => {
+    setMarriageInfo({
+      firstPartnerName: data.firstPartner,
+      secondPartnerName: data.secondPartner,
+      firstWitnessName: data.firstWitness,
+      secondWitnessName: data.secondWitness,
+      secondPartnerAddress: data.secondPartnerAddress,
+      firstWitnessAddress: data.firstWitnessAddress,
+      secondWitnessAddress: data.secondWitnessAddress,
+      weddingDate: data.marriageDate,
+      weddingLocation: data.marriageLocation,
+    });
+    firstPartnerSign?.();
+    console.log(data);
+    return (
+      <div>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      </div>
+    );
+  };
+
+  const [firstPartner, setFirstPartner] = useState({ firstPartnerAddress: '' });
+  const {
+    register: registerSecondPartnerForm,
+    handleSubmit: handleSubmitSecondPartner,
+    formState: { errors: errorSecondPartner },
+  } = useForm();
+  const { config: secondPartnerSignConfig } = usePrepareContractWrite({
+    address: address,
+    abi: abi,
+    functionName: 'secondPartnerSign',
+    args: [firstPartner.firstPartnerAddress],
+  });
+  const {
+    data: d2,
+    isLoading: isL2,
+    isSuccess: isS2,
+    error: e2,
+    write: secondPartnerSign,
+  } = useContractWrite(secondPartnerSignConfig);
+  const onSecondPartnerSign = async (data: any) => {
+    setFirstPartner(data);
+    secondPartnerSign?.();
+    console.log(data);
+    return (
+      <div>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      </div>
+    );
+  };
+
+  const {
+    register: registerFirstWitnessForm,
+    handleSubmit: handleSubmitFirstWitness,
+    formState: { errors: errorFirstWitness },
+  } = useForm();
+  const { config: firstWitnessSignConfig } = usePrepareContractWrite({
+    address: address,
+    abi: abi,
+    functionName: 'firstWitnessSignOff',
+    args: [firstPartner.firstPartnerAddress],
+  });
+  const {
+    data: w1,
+    isLoading: isLW1,
+    isSuccess: isSW1,
+    error: eW1,
+    write: firstWitnessSign,
+  } = useContractWrite(firstWitnessSignConfig);
+  const onFirstWitnessSign = async (data: any) => {
+    setFirstPartner(data);
+    firstWitnessSign?.();
+    console.log(data);
+    return (
+      <div>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      </div>
+    );
+  };
+
+  const {
+    register: registerSecondWitnessForm,
+    handleSubmit: handleSubmitSecondWitness,
+    formState: { errors: errorSecondWitness },
+  } = useForm();
+  const { config: secondWitnessSignConfig } = usePrepareContractWrite({
+    address: address,
+    abi: abi,
+    functionName: 'secondWitnessSignOff',
+    args: [firstPartner.firstPartnerAddress],
+  });
+  const {
+    data: w2,
+    isLoading: isLW2,
+    isSuccess: isSW2,
+    error: eW2,
+    write: secondWitnessSign,
+  } = useContractWrite(secondWitnessSignConfig);
+  const onSecondWitnessSign = async (data: any) => {
+    setFirstPartner(data);
+    secondWitnessSign?.();
+    console.log(data);
+    return (
+      <div>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      </div>
+    );
+  };
+
+  const {
+    register: registerOfficiantForm,
+    handleSubmit: handleSubmitOfficiant,
+    formState: { errors: errorOfficiant },
+  } = useForm();
+  const { config: officiantSignConfig } = usePrepareContractWrite({
+    address: address,
+    abi: abi,
+    functionName: 'officiantSignOff',
+    args: [firstPartner.firstPartnerAddress],
+  });
+  const {
+    data: o,
+    isLoading: isLO,
+    isSuccess: isSO,
+    error: eO,
+    write: officiantSign,
+  } = useContractWrite(officiantSignConfig);
+  const onOfficiantSign = async (data: any) => {
+    setFirstPartner(data);
+    officiantSign?.();
+    console.log(data);
+    return (
+      <div>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      </div>
+    );
+  };
+
+  const {
+    register: registerViewRecordForm,
+    handleSubmit: handleSubmitViewRecord,
+    formState: { errors: errorViewRecord },
+  } = useForm();
+  // const { config: viewRecordConfig } = usePrepareContractWrite({
+  //   address: address,
+  //   abi: abi,
+  //   functionName: 'secondPartnerSign',
+  //   args: [firstPartner.firstPartnerAddress]
+  // });
+  // const { data: d2, isLoading: isL2, isSuccess: isS2, error: e2, write: secondPartnerSign } = useContractWrite(secondPartnerSignConfig);
+  const onViewRecord = async (data: any) => {
+    try {
+      const record = await readContract({
+        address: address,
+        abi: abi,
+        functionName: 'getNumRecords',
+      });
+      console.log(record);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return (
+      <div>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      </div>
+    );
+  };
+
   return (
     <VStack w={'full'}>
       <Heading size="md" marginBottom={6}>
-        Ethereum Boilerplate
+        Ethereum Marriage Registry
       </Heading>
       <List spacing={3}>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Moralis authentication
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display Transactions
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display ERC20 transfers
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display ERC20 balances
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display NFT balances
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display NFT transfers
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Multichain Support
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Using Moralis from client-side
-        </ListItem>
-        <ListItem>
           <ListIcon as={SettingsIcon} color="green.500" />
-          Adding explorer links to balances, transactions ...
+          First, log in to your preferred wallet
         </ListItem>
         <ListItem>
-          <ListIcon as={SettingsIcon} color="green.500" />
-          Better responsive design
+          <ListIcon as={EmailIcon} color="green.500" />
+          Then attach any vows, prenuptial or contracts
         </ListItem>
         <ListItem>
-          <ListIcon as={SettingsIcon} color="green.500" />
-          Rainbowkit integration
+          <ListIcon as={EditIcon} color="green.500" />
+          Both parties need to sign with your wallet
         </ListItem>
         <ListItem>
-          <ListIcon as={SettingsIcon} color="green.500" />
-          ... and more
+          <ListIcon as={CheckCircleIcon} color="green.500" />
+          Finally get your marriage officiant to sign off too
+        </ListItem>
+        <ListItem>
+          <ListIcon as={ViewIcon} color="green.500" />
+          Now you can view your marriage record! Congratulations!!
         </ListItem>
       </List>
+      <form onSubmit={handleSubmit(onFirstPartnerSign)}>
+        <FormControl isRequired>
+          <FormLabel>First Partner</FormLabel>
+          <Input placeholder="First Partner" {...register('firstPartner')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Second Partner</FormLabel>
+          <Input placeholder="Second Partner" {...register('secondPartner')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>First Witness</FormLabel>
+          <Input placeholder="First Witness" {...register('firstWitness')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Second Witness</FormLabel>
+          <Input placeholder="Second Witness" {...register('secondWitness')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Second Partner's Address</FormLabel>
+          <Input placeholder="Second Partner's Address" {...register('secondPartnerAddress')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>First Witness' Address</FormLabel>
+          <Input placeholder="First Witness' Address" {...register('firstWitnessAddress')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Second Witness' Address</FormLabel>
+          <Input placeholder="Second Witness' Address" {...register('secondWitnessAddress')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Marriage date</FormLabel>
+          <Input placeholder="Marriage date" {...register('marriageDate')} />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Marriage location</FormLabel>
+          <Input placeholder="Marriage location" {...register('marriageLocation')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Submit
+        </Button>
+      </form>
+      <form onSubmit={handleSubmitSecondPartner(onSecondPartnerSign)}>
+        <FormControl isRequired>
+          <FormLabel>Second Partner</FormLabel>
+          <Input placeholder="First Partner Address" {...registerSecondPartnerForm('firstPartnerAddress')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Sign
+        </Button>
+      </form>
+      <form onSubmit={handleSubmitFirstWitness(onFirstWitnessSign)}>
+        <FormControl isRequired>
+          <FormLabel>First Witness</FormLabel>
+          <Input placeholder="First Partner Address" {...registerFirstWitnessForm('firstPartnerAddress')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Sign
+        </Button>
+      </form>
+      <form onSubmit={handleSubmitSecondWitness(onSecondWitnessSign)}>
+        <FormControl isRequired>
+          <FormLabel>Second Witness</FormLabel>
+          <Input placeholder="First Partner Address" {...registerSecondWitnessForm('firstPartnerAddress')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Sign
+        </Button>
+      </form>
+      <form onSubmit={handleSubmitOfficiant(onOfficiantSign)}>
+        <FormControl isRequired>
+          <FormLabel>Officiant</FormLabel>
+          <Input placeholder="First Partner Address" {...registerOfficiantForm('firstPartnerAddress')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Sign
+        </Button>
+      </form>
+      <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
+        <FormControl isRequired>
+          <FormLabel>View Record</FormLabel>
+          {/* <Input placeholder='First Partner Address' {...registerSecondPartnerForm('firstPartnerAddress')}/> */}
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Submit
+        </Button>
+      </form>
     </VStack>
   );
 };
