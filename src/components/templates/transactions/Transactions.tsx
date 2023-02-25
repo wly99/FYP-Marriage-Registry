@@ -46,6 +46,16 @@ interface Record {
   officiantSigned: boolean;
 }
 
+interface Officiant {
+  officiantName: string;
+  officiantAddress: string;
+  officiantLocation: string;
+  issuingAuthority: string;
+  rootAuthority: string;
+  permissions: number;
+  isActive: boolean;
+}
+
 const address = '0xe10Df2d5502B439a580649d17c134dbB7c2a4FD4';
 
 const Transactions = () => {
@@ -59,6 +69,7 @@ const Transactions = () => {
 
   useEffect(() => console.log('transactions: ', transactions), [transactions]);
 
+  // Form logic for viewing an address' marriage record
   const [firstPartnerAddress, setFirstPartnerAddress] = useState<string>();
   const [records, setRecords] = useState<Record[]>();
   const {
@@ -77,6 +88,30 @@ const Transactions = () => {
       console.log(record);
       setFirstPartnerAddress(data.firstPartnerAddress);
       setRecords(record);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Form logic for viewing an officiant's record
+  const [officiantAddress, setOfficiantAddress] = useState<string>();
+  const [officiantRecords, setOfficiantRecords] = useState<Officiant[]>();
+  const {
+    register: registerViewOfficiantRecordForm,
+    handleSubmit: handleSubmitViewOfficiantRecord,
+    formState: { errors: errorViewOfficiantRecord },
+  } = useForm();
+  const onViewOfficiantRecord = async (data: any) => {
+    try {
+      const record = (await readContract({
+        address: address,
+        abi: abi,
+        functionName: 'officiants',
+        args: [data.officiantAddress],
+      })) as Officiant[];
+      console.log(record);
+      setOfficiantRecords(data.officiantAddress);
+      setOfficiantRecords(record);
     } catch (error) {
       console.log(error);
     }
