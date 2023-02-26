@@ -366,10 +366,10 @@ const Transactions = () => {
       <Heading size="lg" marginBottom={6}>
         View Officiant Records
       </Heading>
-      <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
+      <form onSubmit={handleSubmitViewOfficiantRecord(onViewOfficiantRecord)}>
         <FormControl isRequired>
           <FormLabel>Officiant Address</FormLabel>
-          <Input placeholder="Officiant Address" {...registerViewRecordForm('firstPartnerAddress')} />
+          <Input placeholder="Officiant Address" {...registerViewOfficiantRecordForm('officiantAddress')} />
         </FormControl>
         <Button mt={4} colorScheme="teal" type="submit">
           Submit
