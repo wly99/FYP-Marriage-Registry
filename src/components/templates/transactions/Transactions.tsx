@@ -271,16 +271,6 @@ const Transactions = () => {
           <FormLabel>Officiant Location</FormLabel>
           <Input placeholder="Officiant Location" {...registerAddFirstRootOfficiantForm('officiantLocation')} />
         </FormControl>
-        <FormControl>
-          <FormLabel>Permissions</FormLabel>
-          <NumberInput max={2} min={0}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
         <Button mt={4} colorScheme="teal" type="submit">
           Add
         </Button>
