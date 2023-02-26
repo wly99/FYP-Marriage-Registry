@@ -10,7 +10,7 @@ import Moralis from 'moralis';
 import { ethers } from 'ethers';
 
 const chain = EvmChain.MUMBAI;
-const address = '0xe10Df2d5502B439a580649d17c134dbB7c2a4FD4'; //0x00482878d4EE1d3aFbab2Fd0504492c7F6BF1861
+const address = '0x0e669F9078470a48896D825e2f3e719928D0720d';
 
 const Home = () => {
   const {
