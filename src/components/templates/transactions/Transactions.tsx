@@ -272,8 +272,8 @@ const Transactions = () => {
           <Input placeholder="Officiant Location" {...registerAddFirstRootOfficiantForm('officiantLocation')} />
         </FormControl>
         <FormControl>
-          <FormLabel>Amount</FormLabel>
-          <NumberInput max={50} min={10}>
+          <FormLabel>Permissions</FormLabel>
+          <NumberInput max={2} min={0}>
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -311,7 +311,7 @@ const Transactions = () => {
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Permissions</FormLabel>
-          <Input type='number' max='2' min='0' placeholder="Permission Level eg 1" {...registerAddOfficiantForm('permissions')} />
+          <Input type='number' max='2' min='0' step={1} placeholder="Permission Level eg 1" {...registerAddOfficiantForm('permissions')} />
         </FormControl>
        
         <Button mt={4} colorScheme="teal" type="submit">
