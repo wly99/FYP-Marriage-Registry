@@ -95,7 +95,7 @@ const Transactions = () => {
 
   // Form logic for viewing an officiant's record
   const [officiantAddress, setOfficiantAddress] = useState<string>();
-  const [officiantRecords, setOfficiantRecords] = useState<Officiant[]>();
+  const [officiantRecords, setOfficiantRecords] = useState<Officiant>();
   const {
     register: registerViewOfficiantRecordForm,
     handleSubmit: handleSubmitViewOfficiantRecord,
@@ -109,7 +109,7 @@ const Transactions = () => {
         abi: abi,
         functionName: 'getOfficiantRecord',
         args: [data.officiantAddress],
-      })) as Officiant[];
+      })) as Officiant;
       console.log(record);
       setOfficiantRecords(data.officiantAddress);
       setOfficiantRecords(record);
@@ -325,7 +325,7 @@ const Transactions = () => {
           Submit
         </Button>
       </form>
-      {officiantRecords?.length ? (
+      {officiantRecords? (
         <Box border="2px" borderColor={hoverTrColor} borderRadius="xl" padding="24px 18px">
           <TableContainer w={'full'}>
             <Table>
@@ -337,22 +337,19 @@ const Transactions = () => {
                   <Th>Issuing Authority</Th>
                   <Th>Root Authority</Th>
                   <Th>Permission Level</Th>
-                  <Th>First Witness Signed</Th>
                   <Th>Status</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {officiantRecords?.map((tx, key) => (
-                  <Tr key={key} _hover={{ bgColor: hoverTrColor }} cursor="pointer">
-                    <Td>{tx?.officiantName}</Td>
-                    <Td>{getEllipsisTxt(tx?.officiantAddress)}</Td>
-                    <Td>{tx?.officiantLocation}</Td>
-                    <Td>{getEllipsisTxt(tx?.issuingAuthority)}</Td>
-                    <Td>{getEllipsisTxt(tx?.rootAuthority)}</Td>
-                    <Td>{tx?.permissions}</Td>
-                    <Td>{tx?.isActive ? 'Active' : 'Inactive'}</Td>
+                  <Tr _hover={{ bgColor: hoverTrColor }} cursor="pointer">
+                    <Td>{officiantRecords?.officiantName}</Td>
+                    <Td>{getEllipsisTxt(officiantRecords?.officiantAddress)}</Td>
+                    <Td>{officiantRecords?.officiantLocation}</Td>
+                    <Td>{getEllipsisTxt(officiantRecords?.issuingAuthority)}</Td>
+                    <Td>{getEllipsisTxt(officiantRecords?.rootAuthority)}</Td>
+                    <Td>{officiantRecords?.permissions}</Td>
+                    <Td>{officiantRecords?.isActive ? 'Active' : 'Inactive'}</Td>
                   </Tr>
-                ))}
               </Tbody>
             </Table>
           </TableContainer>
