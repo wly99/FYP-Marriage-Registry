@@ -106,7 +106,7 @@ const Transactions = () => {
       const record = (await readContract({
         address: address,
         abi: abi,
-        functionName: 'isOfficiantActive',
+        functionName: 'getOfficiantRecord',
         args: [data.officiantAddress],
       })) as Officiant[];
       console.log(record);
