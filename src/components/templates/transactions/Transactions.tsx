@@ -102,6 +102,7 @@ const Transactions = () => {
     formState: { errors: errorViewOfficiantRecord },
   } = useForm();
   const onViewOfficiantRecord = async (data: any) => {
+    setOfficiantAddress(data.officiantAddress);
     try {
       const record = (await readContract({
         address: address,
