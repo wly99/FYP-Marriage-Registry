@@ -200,6 +200,62 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "officiantAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getOfficiantRecord",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "officiantName",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "officiantAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "officiantLocation",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "issuingAuthority",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "rootAuthority",
+            "type": "address"
+          },
+          {
+            "internalType": "enum MarriageRegistry.PermissionLevel",
+            "name": "permissions",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct MarriageRegistry.OfficiantRecord",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "firstPartnerAddress",
         "type": "address"
       }

@@ -117,6 +117,7 @@ const Transactions = () => {
     }
   };
 
+  // Officiant sign-off
   const { config: officiantSignConfig } = usePrepareContractWrite({
     address: address,
     abi: abi,
@@ -128,6 +129,7 @@ const Transactions = () => {
     officiantSign?.();
   };
 
+  // Form logic for adding a first root officiant
   const [officiantInfo, setOfficiantInfo] = useState({
     officiantName: '-',
     officiantAddress: '-',
@@ -160,6 +162,7 @@ const Transactions = () => {
     addFirstRootOfficiant?.();
   };
 
+  // Form logic for adding an officiant
   const {
     register: registerAddOfficiantForm,
     handleSubmit: handleSubmitAddOfficiant,
@@ -185,6 +188,7 @@ const Transactions = () => {
     console.log(data);
   };
 
+  // Render app
   return (
     <>
       <Heading size="lg" marginBottom={6}>
