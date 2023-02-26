@@ -408,7 +408,7 @@ const Transactions = () => {
           </TableContainer>
         </Box>
       ) : (
-        <Box>Looks like you do not have any records</Box>
+        <Box>Looks like there aren't any records</Box>
       )}
     </>
   );
