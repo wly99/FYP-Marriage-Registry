@@ -313,6 +313,53 @@ const Transactions = () => {
         </Button>
       </form>
       <Heading size="lg" marginBottom={6}>
+        View Officiant Records
+      </Heading>
+      <form onSubmit={handleSubmitViewOfficiantRecord(onViewOfficiantRecord)}>
+        <FormControl isRequired>
+          <FormLabel>Officiant Address</FormLabel>
+          <Input placeholder="Officiant Address" {...registerViewOfficiantRecordForm('officiantAddress')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Submit
+        </Button>
+      </form>
+      {officiantRecords?.length ? (
+        <Box border="2px" borderColor={hoverTrColor} borderRadius="xl" padding="24px 18px">
+          <TableContainer w={'full'}>
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th>Officiant Name</Th>
+                  <Th>Officiant Address</Th>
+                  <Th>Officiant Location</Th>
+                  <Th>Issuing Authority</Th>
+                  <Th>Root Authority</Th>
+                  <Th>Permission Level</Th>
+                  <Th>First Witness Signed</Th>
+                  <Th>Status</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {officiantRecords?.map((tx, key) => (
+                  <Tr key={key} _hover={{ bgColor: hoverTrColor }} cursor="pointer">
+                    <Td>{tx?.officiantName}</Td>
+                    <Td>{getEllipsisTxt(tx?.officiantAddress)}</Td>
+                    <Td>{tx?.officiantLocation}</Td>
+                    <Td>{getEllipsisTxt(tx?.issuingAuthority)}</Td>
+                    <Td>{getEllipsisTxt(tx?.rootAuthority)}</Td>
+                    <Td>{tx?.permissions}</Td>
+                    <Td>{tx?.isActive ? 'Active' : 'Inactive'}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
+      ) : (
+        <Box>Looks like there aren't any records</Box>
+      )}
+      <Heading size="lg" marginBottom={6}>
         Transactions
       </Heading>
       {transactions?.length ? (
@@ -356,53 +403,6 @@ const Transactions = () => {
         </Box>
       ) : (
         <Box>Looks like you do not have any transactions</Box>
-      )}
-      <Heading size="lg" marginBottom={6}>
-        View Officiant Records
-      </Heading>
-      <form onSubmit={handleSubmitViewOfficiantRecord(onViewOfficiantRecord)}>
-        <FormControl isRequired>
-          <FormLabel>Officiant Address</FormLabel>
-          <Input placeholder="Officiant Address" {...registerViewOfficiantRecordForm('officiantAddress')} />
-        </FormControl>
-        <Button mt={4} colorScheme="teal" type="submit">
-          Submit
-        </Button>
-      </form>
-      {records?.length ? (
-        <Box border="2px" borderColor={hoverTrColor} borderRadius="xl" padding="24px 18px">
-          <TableContainer w={'full'}>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Officiant Name</Th>
-                  <Th>Officiant Address</Th>
-                  <Th>Officiant Location</Th>
-                  <Th>Issuing Authority</Th>
-                  <Th>Root Authority</Th>
-                  <Th>Permission Level</Th>
-                  <Th>First Witness Signed</Th>
-                  <Th>Status</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {officiantRecords?.map((tx, key) => (
-                  <Tr key={key} _hover={{ bgColor: hoverTrColor }} cursor="pointer">
-                    <Td>{tx?.officiantName}</Td>
-                    <Td>{getEllipsisTxt(tx?.officiantAddress)}</Td>
-                    <Td>{tx?.officiantLocation}</Td>
-                    <Td>{getEllipsisTxt(tx?.issuingAuthority)}</Td>
-                    <Td>{getEllipsisTxt(tx?.rootAuthority)}</Td>
-                    <Td>{tx?.permissions}</Td>
-                    <Td>{tx?.isActive ? 'Active' : 'Inactive'}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </Box>
-      ) : (
-        <Box>Looks like there aren't any records</Box>
       )}
     </>
   );
