@@ -106,7 +106,7 @@ const Transactions = () => {
       const record = (await readContract({
         address: address,
         abi: abi,
-        functionName: 'officiants',
+        functionName: 'isOfficiantActive',
         args: [data.officiantAddress],
       })) as Officiant[];
       console.log(record);
@@ -253,7 +253,7 @@ const Transactions = () => {
           </TableContainer>
         </Box>
       ) : (
-        <Box>Looks like you do not have any transactions</Box>
+        <Box>Looks like you do not have any records</Box>
       )}
       <Heading size="lg" marginBottom={6}>
         Add First Root Officiant
