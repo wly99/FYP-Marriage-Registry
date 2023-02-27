@@ -189,6 +189,26 @@ const Transactions = () => {
     console.log(data);
   };
 
+  // Form logic for removing an officiant
+  const [removedOfficiant, setRemovedOfficiant] = useState();
+  const {
+    register: registerRemoveOfficiantForm,
+    handleSubmit: handleSubmitRemoveOfficiant,
+    formState: { errors: errorRemoveOfficiant },
+  } = useForm();
+  const { config: removeOfficiantConfig } = usePrepareContractWrite({
+    address: address,
+    abi: abi,
+    functionName: 'removeOfficiant',
+    args: [ removedOfficiant ],
+  });
+  const { data: d4, isLoading: l4, isSuccess: s4, error: e4, write: removeOfficiant } = useContractWrite(removeOfficiantConfig);
+  const onRemoveOfficiant = async (data: any) => {
+    setRemovedOfficiant(data.officiantName)
+    removeOfficiant?.();
+    console.log(data);
+  };
+
   // Render app
   return (
     <>
@@ -314,6 +334,18 @@ const Transactions = () => {
         </Button>
       </form>
       <Heading size="lg" marginBottom={6}>
+        Remove Officiants
+      </Heading>
+      <form onSubmit={handleSubmitRemoveOfficiant(onRemoveOfficiant)}>
+        <FormControl isRequired>
+          <FormLabel>Officiant Address</FormLabel>
+          <Input placeholder="Officiant Address" {...registerAddOfficiantForm('officiantAddress')} />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Remove
+        </Button>
+      </form>
+      <Heading size="lg" marginBottom={6}>
         View Officiant Records
       </Heading>
       <form onSubmit={handleSubmitViewOfficiantRecord(onViewOfficiantRecord)}>
@@ -322,7 +354,7 @@ const Transactions = () => {
           <Input placeholder="Officiant Address" {...registerViewOfficiantRecordForm('officiantAddress')} />
         </FormControl>
         <Button mt={4} colorScheme="teal" type="submit">
-          Submit
+          View
         </Button>
       </form>
       {officiantRecords? (
