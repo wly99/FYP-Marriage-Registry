@@ -1,5 +1,5 @@
 import { CheckCircleIcon, EditIcon, EmailIcon, SettingsIcon, ViewIcon } from '@chakra-ui/icons';
-import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button, Divider } from '@chakra-ui/react';
 import { EvmChain } from 'moralis/common-evm-utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -223,8 +223,8 @@ const Home = () => {
   };
 
   return (
-    <VStack w={'full'}>
-      <Heading size="md" marginBottom={6}>
+    <>
+      <Heading size="lg" marginBottom={6}>
         Ethereum Marriage Registry
       </Heading>
       <List spacing={3}>
@@ -233,22 +233,30 @@ const Home = () => {
           First, log in to your preferred wallet
         </ListItem>
         <ListItem>
-          <ListIcon as={EmailIcon} color="green.500" />
-          Then attach any vows, prenuptial or contracts
+          <ListIcon as={EditIcon} color="green.500" />
+          One partner fills up the form first, signs and submits it
         </ListItem>
         <ListItem>
           <ListIcon as={EditIcon} color="green.500" />
-          Both parties need to sign with your wallet
+          Then get your other partner to sign and submit it
+        </ListItem>
+        <ListItem>
+          <ListIcon as={EditIcon} color="green.500" />
+          Next, the two witnesses will sign and submit it too
         </ListItem>
         <ListItem>
           <ListIcon as={CheckCircleIcon} color="green.500" />
-          Finally get your marriage officiant to sign off too
+          Finally get your marriage officiant to sign off
         </ListItem>
         <ListItem>
           <ListIcon as={ViewIcon} color="green.500" />
           Now you can view your marriage record! Congratulations!!
         </ListItem>
       </List>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
+        First Partner Section
+      </Heading>
       <form onSubmit={handleSubmit(onFirstPartnerSign)}>
         <FormControl isRequired>
           <FormLabel>First Partner</FormLabel>
@@ -290,6 +298,10 @@ const Home = () => {
           Submit
         </Button>
       </form>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
+        Second Partner Section
+      </Heading>
       <form onSubmit={handleSubmitSecondPartner(onSecondPartnerSign)}>
         <FormControl isRequired>
           <FormLabel>Second Partner</FormLabel>
@@ -299,6 +311,10 @@ const Home = () => {
           Sign
         </Button>
       </form>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
+        First Witness Section
+      </Heading>
       <form onSubmit={handleSubmitFirstWitness(onFirstWitnessSign)}>
         <FormControl isRequired>
           <FormLabel>First Witness</FormLabel>
@@ -308,6 +324,10 @@ const Home = () => {
           Sign
         </Button>
       </form>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
+        Second Witness Section
+      </Heading>
       <form onSubmit={handleSubmitSecondWitness(onSecondWitnessSign)}>
         <FormControl isRequired>
           <FormLabel>Second Witness</FormLabel>
@@ -317,6 +337,10 @@ const Home = () => {
           Sign
         </Button>
       </form>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
+        Officiant Section
+      </Heading>
       <form onSubmit={handleSubmitOfficiant(onOfficiantSign)}>
         <FormControl isRequired>
           <FormLabel>Officiant</FormLabel>
@@ -326,6 +350,10 @@ const Home = () => {
           Sign
         </Button>
       </form>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
+        View Marriage Record
+      </Heading>
       <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
         <FormControl isRequired>
           <FormLabel>View Record</FormLabel>
@@ -335,7 +363,7 @@ const Home = () => {
           Submit
         </Button>
       </form>
-    </VStack>
+    </>
   );
 };
 

@@ -14,11 +14,10 @@ import {
   FormLabel,
   Button,
   Input,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
+  List,
+  ListIcon,
+  ListItem,
+  Divider,
 } from '@chakra-ui/react';
 import { useEvmWalletTransactions } from '@moralisweb3/next';
 import { useSession } from 'next-auth/react';
@@ -28,6 +27,7 @@ import { useNetwork, usePrepareContractWrite, useContractWrite } from 'wagmi';
 import { readContract } from '@wagmi/core';
 import { useForm } from 'react-hook-form';
 import abi from '../home/abi.json';
+import { SettingsIcon, EditIcon, CheckCircleIcon, ViewIcon, SearchIcon } from '@chakra-ui/icons';
 
 interface Record {
   firstPartnerName: string;
@@ -213,6 +213,32 @@ const Transactions = () => {
   return (
     <>
       <Heading size="lg" marginBottom={6}>
+        For Officiants
+      </Heading>
+      <List spacing={3}>
+        <ListItem>
+          <ListIcon as={SettingsIcon} color="green.500" />
+          First, log in to your preferred wallet
+        </ListItem>
+        <ListItem>
+          <ListIcon as={SearchIcon} color="green.500" />
+          Look up the record using the first partner's address
+        </ListItem>
+        <ListItem>
+          <ListIcon as={CheckCircleIcon} color="green.500" />
+          Confirm the details and that all parties have signed
+        </ListItem>
+        <ListItem>
+          <ListIcon as={EditIcon} color="green.500" />
+          Then sign off on the marriage certificate
+        </ListItem>
+        <ListItem>
+          <ListIcon as={ViewIcon} color="green.500" />
+          To manage officiants, simply fill up the relevant forms
+        </ListItem>
+      </List>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
         View Marriage Records
       </Heading>
       <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
@@ -280,7 +306,8 @@ const Transactions = () => {
       ) : (
         <Box>Looks like you do not have any records</Box>
       )}
-      <Heading size="lg" marginBottom={6}>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
         Add First Root Officiant
       </Heading>
       <form onSubmit={handleSubmitAddFirstRootOfficiant(onAddFirstRootOfficiant)}>
@@ -300,7 +327,8 @@ const Transactions = () => {
           Add
         </Button>
       </form>
-      <Heading size="lg" marginBottom={6}>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
         Add Officiants
       </Heading>
       <form onSubmit={handleSubmitAddOfficiant(onAddOfficiant)}>
@@ -333,7 +361,8 @@ const Transactions = () => {
           Add
         </Button>
       </form>
-      <Heading size="lg" marginBottom={6}>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
         Remove Officiants
       </Heading>
       <form onSubmit={handleSubmitRemoveOfficiant(onRemoveOfficiant)}>
@@ -345,7 +374,8 @@ const Transactions = () => {
           Remove
         </Button>
       </form>
-      <Heading size="lg" marginBottom={6}>
+      <Divider marginTop={6}/>
+      <Heading size="md" marginTop={6} marginBottom={6}>
         View Officiant Records
       </Heading>
       <form onSubmit={handleSubmitViewOfficiantRecord(onViewOfficiantRecord)}>
