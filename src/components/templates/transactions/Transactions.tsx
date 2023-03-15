@@ -246,7 +246,7 @@ const Transactions = () => {
           <FormLabel>First Partner Address</FormLabel>
           <Input placeholder="First Partner Address" {...registerViewRecordForm('firstPartnerAddress')} />
         </FormControl>
-        <Button mt={4} colorScheme="teal" type="submit">
+        <Button mt={4} colorScheme="teal" type="submit" marginBottom={6}>
           Submit
         </Button>
       </form>
