@@ -6,7 +6,6 @@ import {
   Th,
   Tbody,
   Td,
-  Tfoot,
   Heading,
   Box,
   useColorModeValue,
@@ -18,6 +17,7 @@ import {
   ListIcon,
   ListItem,
   Divider,
+  useToast,
 } from '@chakra-ui/react';
 import { useEvmWalletTransactions } from '@moralisweb3/next';
 import { useSession } from 'next-auth/react';
@@ -68,6 +68,8 @@ const Transactions = () => {
   });
 
   useEffect(() => console.log('transactions: ', transactions), [transactions]);
+
+  const toast = useToast();
 
   // Form logic for viewing an address' marriage record
   const [firstPartnerAddress, setFirstPartnerAddress] = useState<string>();
@@ -125,9 +127,32 @@ const Transactions = () => {
     functionName: 'officiantSignOff',
     args: [firstPartnerAddress],
   });
-  const { data: d1, isLoading, isSuccess, error, write: officiantSign } = useContractWrite(officiantSignConfig);
+  const { data: d1, isLoading, isSuccess, error, write: officiantSign } = useContractWrite({
+    ...officiantSignConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(d1) {
+      console.log('Success', d1)
+      toast({
+        title: 'Success',
+        description: 'Officiant has signed off',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
+  
   const onOfficiantSign = async () => {
-    officiantSign?.();
+      officiantSign?.();      
   };
 
   // Form logic for adding a first root officiant
