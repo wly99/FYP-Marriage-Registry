@@ -1,5 +1,5 @@
 import { CheckCircleIcon, EditIcon, EmailIcon, SettingsIcon, ViewIcon } from '@chakra-ui/icons';
-import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button, Divider } from '@chakra-ui/react';
+import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button, Divider, useToast, Box, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { EvmChain } from 'moralis/common-evm-utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,11 +8,13 @@ import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { readContract } from '@wagmi/core';
 import Moralis from 'moralis';
 import { ethers } from 'ethers';
+import { getEllipsisTxt } from 'utils/format';
 
 const chain = EvmChain.MUMBAI;
 const address = '0x0e669F9078470a48896D825e2f3e719928D0720d';
 
 const Home = () => {
+  const toast = useToast();
   const {
     register,
     handleSubmit,
@@ -46,7 +48,29 @@ const Home = () => {
       marriageInfo.weddingLocation,
     ],
   });
-  const { data, isLoading, isSuccess, error, write: firstPartnerSign } = useContractWrite(firstPartnerSignConfig);
+  const { data, isLoading, isSuccess, error, write: firstPartnerSign } = useContractWrite({
+    ...firstPartnerSignConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(d1) {
+      console.log('Success', d1)
+      toast({
+        title: 'Success',
+        description: 'Your proposal is now on the blockchain!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onFirstPartnerSign = async (data: any) => {
     setMarriageInfo({
       firstPartnerName: data.firstPartner,
@@ -61,12 +85,6 @@ const Home = () => {
     });
     firstPartnerSign?.();
     console.log(data);
-    return (
-      <div>
-        {isLoading && <div>Check Wallet</div>}
-        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-      </div>
-    );
   };
 
   const [firstPartner, setFirstPartner] = useState({ firstPartnerAddress: '' });
@@ -117,17 +135,43 @@ const Home = () => {
     isSuccess: isSW1,
     error: eW1,
     write: firstWitnessSign,
-  } = useContractWrite(firstWitnessSignConfig);
+  } = useContractWrite({
+    ...firstWitnessSignConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You have signed off as a witness!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onFirstWitnessSign = async (data: any) => {
+    try {
     setFirstPartner(data);
     firstWitnessSign?.();
-    console.log(data);
-    return (
-      <div>
-        {isLoading && <div>Check Wallet</div>}
-        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-      </div>
-    );
+    } catch (error) {
+    console.log('Error', error);
+    toast({
+      title: 'Error',
+      description: 'error.message',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    });
+    }
   };
 
   const {
