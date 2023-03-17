@@ -454,7 +454,6 @@ const Home = () => {
       <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
         <FormControl isRequired>
           <FormLabel>View Record</FormLabel>
-          {/* <Input placeholder='First Partner Address' {...registerSecondPartnerForm('firstPartnerAddress')}/> */}
         </FormControl>
         <Button mt={4} colorScheme="teal" type="submit">
           Submit
