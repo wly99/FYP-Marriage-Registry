@@ -62,12 +62,12 @@ const Transactions = () => {
   const hoverTrColor = useColorModeValue('gray.100', 'gray.700');
   const { data } = useSession();
   const { chain } = useNetwork();
-  const { data: transactions } = useEvmWalletTransactions({
-    address: data?.user?.address,
-    chain: chain?.id,
-  });
+  // const { data: transactions } = useEvmWalletTransactions({
+  //   address: data?.user?.address,
+  //   chain: chain?.id,
+  // });
 
-  useEffect(() => console.log('transactions: ', transactions), [transactions]);
+  // useEffect(() => console.log('transactions: ', transactions), [transactions]);
 
   const toast = useToast();
 
@@ -175,7 +175,29 @@ const Transactions = () => {
     functionName: 'addFirstRootOfficiant',
     args: [officiantInfo.officiantName, officiantInfo.officiantAddress, officiantInfo.officiantLocation],
   });
-  const { data: d2, isLoading: l2, isSuccess: s2, error: e2, write: addFirstRootOfficiant } = useContractWrite(addFirstRootOfficiantConfig);
+  const { data: d2, isLoading: l2, isSuccess: s2, error: e2, write: addFirstRootOfficiant } = useContractWrite({
+    ...addFirstRootOfficiantConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You are now the root officiant!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onAddFirstRootOfficiant = async (data: any) => {
     setOfficiantInfo({
       officiantName: data.officiantName,
@@ -200,7 +222,29 @@ const Transactions = () => {
     functionName: 'addOfficiant',
     args: [officiantInfo.officiantName, officiantInfo.officiantAddress, officiantInfo.officiantLocation, officiantInfo.issuingAuthority, officiantInfo.rootAuthority, officiantInfo.permissions],
   });
-  const { data: d3, isLoading: l3, isSuccess: s3, error: e3, write: addOfficiant } = useContractWrite(addOfficiantConfig);
+  const { data: d3, isLoading: l3, isSuccess: s3, error: e3, write: addOfficiant } = useContractWrite({
+    ...addOfficiantConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You added the officiant',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onAddOfficiant = async (data: any) => {
     setOfficiantInfo({
       officiantName: data.officiantName,
@@ -227,7 +271,29 @@ const Transactions = () => {
     functionName: 'removeOfficiant',
     args: [ removedOfficiant ],
   });
-  const { data: d4, isLoading: l4, isSuccess: s4, error: e4, write: removeOfficiant } = useContractWrite(removeOfficiantConfig);
+  const { data: d4, isLoading: l4, isSuccess: s4, error: e4, write: removeOfficiant } = useContractWrite({
+    ...removeOfficiantConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You have removed the officiant',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onRemoveOfficiant = async (data: any) => {
     setRemovedOfficiant(data.officiantAddress)
     removeOfficiant?.();

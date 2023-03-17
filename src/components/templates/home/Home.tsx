@@ -449,19 +449,6 @@ const Home = () => {
       </form>
       <Divider marginTop={6}/>
       <Heading size="md" marginTop={6} marginBottom={6}>
-        Officiant Section
-      </Heading>
-      <form onSubmit={handleSubmitOfficiant(onOfficiantSign)}>
-        <FormControl isRequired>
-          <FormLabel>Officiant</FormLabel>
-          <Input placeholder="First Partner Address" {...registerOfficiantForm('firstPartnerAddress')} />
-        </FormControl>
-        <Button mt={4} colorScheme="teal" type="submit">
-          Sign
-        </Button>
-      </form>
-      <Divider marginTop={6}/>
-      <Heading size="md" marginTop={6} marginBottom={6}>
         View Marriage Record
       </Heading>
       <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
