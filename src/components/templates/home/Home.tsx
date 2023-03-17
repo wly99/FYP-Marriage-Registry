@@ -105,7 +105,29 @@ const Home = () => {
     isSuccess: isS2,
     error: e2,
     write: secondPartnerSign,
-  } = useContractWrite(secondPartnerSignConfig);
+  } = useContractWrite({
+    ...secondPartnerSignConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You have accepted the proposal!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onSecondPartnerSign = async (data: any) => {
     setFirstPartner(data);
     secondPartnerSign?.();
@@ -191,7 +213,29 @@ const Home = () => {
     isSuccess: isSW2,
     error: eW2,
     write: secondWitnessSign,
-  } = useContractWrite(secondWitnessSignConfig);
+  } = useContractWrite({
+    ...secondWitnessSignConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You have signed off as a witness!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onSecondWitnessSign = async (data: any) => {
     setFirstPartner(data);
     secondWitnessSign?.();
@@ -221,7 +265,29 @@ const Home = () => {
     isSuccess: isSO,
     error: eO,
     write: officiantSign,
-  } = useContractWrite(officiantSignConfig);
+  } = useContractWrite({
+    ...firstWitnessSignConfig, 
+    onError(error) {
+      console.log('Error', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+      toast({
+        title: 'Success',
+        description: 'You have officiated the marriage!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  });
   const onOfficiantSign = async (data: any) => {
     setFirstPartner(data);
     officiantSign?.();
