@@ -1,5 +1,5 @@
 import { CheckCircleIcon, EditIcon, EmailIcon, SettingsIcon, ViewIcon } from '@chakra-ui/icons';
-import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button, Divider, useToast, Box, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Heading, VStack, List, ListIcon, ListItem, FormControl, FormLabel, Input, Button, Divider, useToast, Box, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useColorModeValue } from '@chakra-ui/react';
 import { EvmChain } from 'moralis/common-evm-utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,7 +13,25 @@ import { getEllipsisTxt } from 'utils/format';
 const chain = EvmChain.MUMBAI;
 const address = '0x0e669F9078470a48896D825e2f3e719928D0720d';
 
+interface Record {
+  firstPartnerName: string;
+  secondPartnerName: string;
+  firstWitnessName: string;
+  secondWitnessName: string;
+  secondPartnerAddress: string;
+  firstWitnessAddress: string;
+  secondWitnessAddress: string;
+  officiantAddress: string;
+  weddingDate: string;
+  weddingLocation: string;
+  secondPartnerSigned: boolean;
+  firstWitnessSigned: boolean;
+  secondWitnessSigned: boolean;
+  officiantSigned: boolean;
+}
+
 const Home = () => {
+  const hoverTrColor = useColorModeValue('gray.100', 'gray.700');
   const toast = useToast();
   const {
     register,
@@ -305,31 +323,29 @@ const Home = () => {
     handleSubmit: handleSubmitViewRecord,
     formState: { errors: errorViewRecord },
   } = useForm();
-  // const { config: viewRecordConfig } = usePrepareContractWrite({
-  //   address: address,
-  //   abi: abi,
-  //   functionName: 'secondPartnerSign',
-  //   args: [firstPartner.firstPartnerAddress]
-  // });
-  // const { data: d2, isLoading: isL2, isSuccess: isS2, error: e2, write: secondPartnerSign } = useContractWrite(secondPartnerSignConfig);
+
+  // Form logic for viewing an address' marriage record
+  const [firstPartnerAddress, setFirstPartnerAddress] = useState<string>();
+  const [records, setRecords] = useState<Record[]>();
+  const {
+    register: registerViewRecordsForm,
+    handleSubmit: handleSubmitViewRecords,
+    formState: { errors: errorViewRecords },
+  } = useForm();
   const onViewRecord = async (data: any) => {
     try {
-      const record = await readContract({
+      const record = (await readContract({
         address: address,
         abi: abi,
-        functionName: 'getNumRecords',
-      });
+        functionName: 'getRecords',
+        args: [data.firstPartnerAddress],
+      })) as Record[];
       console.log(record);
+      setFirstPartnerAddress(data.firstPartnerAddress);
+      setRecords(record);
     } catch (error) {
       console.log(error);
     }
-
-    return (
-      <div>
-        {isLoading && <div>Check Wallet</div>}
-        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-      </div>
-    );
   };
 
   return (
@@ -453,12 +469,63 @@ const Home = () => {
       </Heading>
       <form onSubmit={handleSubmitViewRecord(onViewRecord)}>
         <FormControl isRequired>
-          <FormLabel>View Record</FormLabel>
+          <FormLabel>First Partner Address</FormLabel>
+          <Input placeholder="First Partner Address" {...registerViewRecordForm('firstPartnerAddress')} />
         </FormControl>
-        <Button mt={4} colorScheme="teal" type="submit">
+        <Button mt={4} colorScheme="teal" type="submit" marginBottom={6}>
           Submit
         </Button>
       </form>
+      {records?.length ? (
+        <Box border="2px" borderColor={hoverTrColor} borderRadius="xl" padding="24px 18px">
+          <TableContainer w={'full'}>
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th>First Partner</Th>
+                  <Th>Second Partner</Th>
+                  <Th>Second Partner Address</Th>
+                  <Th>Second Partner Signed</Th>
+                  <Th>First Witness</Th>
+                  <Th>First Witness Address</Th>
+                  <Th>First Witness Signed</Th>
+                  <Th>Second Witness</Th>
+                  <Th>Second Witness Address</Th>
+                  <Th>Second Witness Signed</Th>
+                  <Th>Date</Th>
+                  <Th>Location</Th>
+                  <Th>Officiant Address</Th>
+                  <Th>Officiant Signed</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {records?.map((tx, key) => (
+                  <Tr key={key} _hover={{ bgColor: hoverTrColor }} cursor="pointer">
+                    <Td>{tx?.firstPartnerName}</Td>
+                    <Td>{tx?.secondPartnerName}</Td>
+                    <Td>{getEllipsisTxt(tx?.secondPartnerAddress)}</Td>
+                    <Td>{tx?.secondPartnerSigned ? 'Yes' : 'No'}</Td>
+                    <Td>{tx?.firstWitnessName}</Td>
+                    <Td>{getEllipsisTxt(tx?.firstWitnessAddress)}</Td>
+                    <Td>{tx?.firstWitnessSigned ? 'Yes' : 'No'}</Td>
+                    <Td>{tx?.secondWitnessName}</Td>
+                    <Td>{getEllipsisTxt(tx?.secondWitnessAddress)}</Td>
+                    <Td>{tx?.secondWitnessSigned ? 'Yes' : 'No'}</Td>
+                    <Td>{new Date(tx.weddingDate).toLocaleDateString()}</Td>
+                    <Td>{tx.weddingLocation}</Td>
+                    <Td>{getEllipsisTxt(tx?.officiantAddress)}</Td>
+                    <Td>
+                      {tx?.officiantSigned ? 'Yes' : 'No'}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
+      ) : (
+        <Box>Looks like you do not have any records</Box>
+      )}
     </>
   );
 };

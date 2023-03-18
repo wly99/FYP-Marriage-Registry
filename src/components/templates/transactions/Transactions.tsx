@@ -67,8 +67,6 @@ const Transactions = () => {
   //   chain: chain?.id,
   // });
 
-  // useEffect(() => console.log('transactions: ', transactions), [transactions]);
-
   const toast = useToast();
 
   // Form logic for viewing an address' marriage record
@@ -369,19 +367,19 @@ const Transactions = () => {
                     <Td>{tx?.firstPartnerName}</Td>
                     <Td>{tx?.secondPartnerName}</Td>
                     <Td>{getEllipsisTxt(tx?.secondPartnerAddress)}</Td>
-                    <Td>{tx?.secondPartnerSigned ? 'True' : 'False'}</Td>
+                    <Td>{tx?.secondPartnerSigned ? 'Yes' : 'No'}</Td>
                     <Td>{tx?.firstWitnessName}</Td>
                     <Td>{getEllipsisTxt(tx?.firstWitnessAddress)}</Td>
-                    <Td>{tx?.firstWitnessSigned ? 'True' : 'False'}</Td>
+                    <Td>{tx?.firstWitnessSigned ? 'Yes' : 'No'}</Td>
                     <Td>{tx?.secondWitnessName}</Td>
                     <Td>{getEllipsisTxt(tx?.secondWitnessAddress)}</Td>
-                    <Td>{tx?.secondWitnessSigned ? 'True' : 'False'}</Td>
+                    <Td>{tx?.secondWitnessSigned ? 'Yes' : 'No'}</Td>
                     <Td>{new Date(tx.weddingDate).toLocaleDateString()}</Td>
                     <Td>{tx.weddingLocation}</Td>
                     <Td>{getEllipsisTxt(tx?.officiantAddress)}</Td>
                     <Td>
                       {tx?.officiantSigned ? (
-                        <Td>{tx.officiantSigned ? 'True' : 'False'}</Td>
+                        <Td>{tx.officiantSigned ? 'Yes' : 'No'}</Td>
                       ) : (
                         <Button colorScheme="teal" type="submit" onClick={onOfficiantSign}>
                           Sign
