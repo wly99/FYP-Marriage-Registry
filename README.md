@@ -2,8 +2,6 @@
 
 > Register marriages, manage officiants, view records
 
-🚀DEMO: https://eth-boilerplate.vercel.app/
-
 # 🚀 `Quick Start`
 
 📄 Clone or fork `blockchain based marriage registry`:
@@ -21,7 +19,7 @@ yarn install
 
 ✏ Create your `.env.local` file and provide required data. Get your Web3 Api Key from Alchemy and Moralis
 
-🚴‍♂️ Run the App:
+🚴‍♂️ Run the App locally:
 
 ```sh
 npm run dev
