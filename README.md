@@ -1,6 +1,6 @@
 # `Blockchain based marriage registry`
 
-> Fully Typescript ready NextJS components for fast building dApps without running own backend
+> Fully Typescript ready NextJS components
 
 🚀DEMO: https://eth-boilerplate.vercel.app/
 
@@ -24,10 +24,10 @@ yarn install
 🚴‍♂️ Run the App:
 
 ```sh
-yarn start
+npm run dev
 ```
 
 # 🧭 `Table of contents`
-- [`ethereum-boilerplate`](#ethereum-boilerplate)
+- [`blockchain based marriage registry`](#Blockchain based marriage registry)
 - [🚀 Quick Start](#-quick-start)
 - [🧭 Table of contents](#-table-of-contents)
