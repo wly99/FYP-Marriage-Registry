@@ -1,6 +1,6 @@
 # `Blockchain based marriage registry`
 
-> Fully Typescript ready NextJS components
+> Register marriages, manage officiants, view records
 
 🚀DEMO: https://eth-boilerplate.vercel.app/
 
@@ -26,8 +26,3 @@ yarn install
 ```sh
 npm run dev
 ```
-
-# 🧭 `Table of contents`
-- [`blockchain based marriage registry`](#Blockchain based marriage registry)
-- [🚀 Quick Start](#-quick-start)
-- [🧭 Table of contents](#-table-of-contents)
